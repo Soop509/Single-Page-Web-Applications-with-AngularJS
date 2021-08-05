@@ -2,45 +2,39 @@
 'use strict';
 
 angular.module('LunchCheck', [])
+.controller('LunchCheckController', LunchCheckController)
 
-.controller('LunchCheckController', function ($scope) {
-
-  $scope.input="";    //finish
-  $scope.message="Nothing to display.";
-
+LunchCheckController.$inject = ['$scope'];
+function LunchCheckController($scope) {
+  $scope.input="";
+  $scope.message="Nothing...";
   //LunchCheckController.$inject = ['$scope'];
+
+  function numberOfItems(list){
+    if(list==""){
+      return 0;
+    }
+    var arr = list.split(",");
+    console.log(arr);
+    var a = arr.length;
+    return a;
+  }
+  function message(a){
+    if(a==0){// empty
+      return "Please enter data first";
+    }else if(a<=3){
+      return "Enjoy";
+    }else{
+      return "Too Much!";
+    }
+  }
   $scope.checkLunch = function(){
     var input = document.getElementById("lunch-menu");
 
-    function numberOfItems(list){
-      var items = list.split(",");
-      console.log("Items:");
-      console.log(items);
-      return items.length;
-    }
-    function isEnough(number){
-      if(number<=3){
-        return true;
-      }else{
-        return false;
-      }
-    }
-    function message(answer){
-      if(answer){
-        return "Enjoy!"
-      }else{
-        return "Too Much!"
-      }
-    }
-
-    console.log("checkLunch function running...")
-
+    console.log("checkLunch function running...");
     var a = numberOfItems(input.value);
-    var b = isEnough(a);
-    $scope.message = message(b);
-  }
+    $scope.message = message(a);
 
-});
-
-
+  };
+}
 })();
